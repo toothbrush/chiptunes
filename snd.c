@@ -51,11 +51,10 @@ int main(int argc, char** argv){
 
     unsigned int (**tunes)(unsigned int);
 
-    tunes = malloc(N * sizeof(tune1));
+    tunes = malloc(N * sizeof(&tune1));
     printw("size of tune = %d\n", (&tune1));
     printw("size of tune = %d\n", (&tune2));
     printw("size of tune = %d\n", (&tune3));
-    printw("size of tune = %d\n", (&tune4));
     if (tunes == NULL)
     {
         fprintf(stderr, "omigod, couldn't allocate tunes array!\n");
@@ -80,7 +79,7 @@ int main(int argc, char** argv){
             currentTune = (currentTune + 1) % N;
             t = 0; // restart at beginning of song.
             printw("Next tune! Will play tune #%d/%d.\n", currentTune + 1, N);
-            printw("would be the output?? \n");
+            printw("would be the output?? %d\n", tunes[currentTune](t));
             refresh();
         }
 
