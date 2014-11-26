@@ -24,10 +24,10 @@ unsigned int tune4(unsigned int t){
 
 /* end tunes */
 
-void main(int argc, char** argv){
+int main(int argc, char** argv){
     /* this generates some nifty sound. */
     unsigned int t;
-    char ch, lastch;
+    char ch;
     FILE *f = fopen("/dev/dsp", "w");
 
     int currentTune = 0;
@@ -44,7 +44,7 @@ void main(int argc, char** argv){
     }
 
     printw("Size of variable t = %d bytes.\n", sizeof(t));
-    printw("Press <RET> to advance to next tune, 'q' to quit.\n");
+    printw("Press <RET> to advance to next tune, C-c to quit.\n");
     refresh();            /* Print it on to the real screen */
 
     /* put together a list of function pointers to our "tunes" */
@@ -73,21 +73,22 @@ void main(int argc, char** argv){
 
         ch = getch();
 
-        if ( ch == 'q' ) {
-            break;
-        }
+        //if ( ch == 'q' ) {
+        //    break;
+        //}
         if (ch == '\n') {
             currentTune = (currentTune + 1) % N;
             t = 0; // restart at beginning of song.
-            refresh();
             printw("Next tune! Will play tune #%d/%d.\n", currentTune + 1, N);
-            printw("%c would be the output?? \n", tunes[currentTune](t));
+            printw("would be the output?? \n");
+            refresh();
         }
 
         /* the main loop code */
         putc(tunes[currentTune](t), f);
         t++;
     }
+    free(tunes);
     refresh();
     printw("Okay, quitting.\n");
     fclose(f);
