@@ -5,8 +5,9 @@
 #define N 4
 
 /*
- * note that as a starting point these tunes have been 
+ * note that as a starting point these tunes have been
  * lifted from <http://countercomplex.blogspot.fr/2011/10/algorithmic-symphonies-from-one-line-of.html>
+ * Thanks viznut!
  */
 unsigned int tune1(unsigned int t){
         return (t * (((t>>12)|(t>>8)) & (63&(t>>4))));
@@ -18,8 +19,7 @@ unsigned int tune3(unsigned int t){
         return ((-t&4095)*(255&t*(t&t>>13))>>12) + (127&t*(234&t>>8&t>>3)>>(3&t>>14));
 };
 unsigned int tune4(unsigned int t){
-        return t;
-        //return (t*(t>>((t>>9|t>>8))&63&t>>4));
+        return (t >> 6|t|t>>(t>>16))*10+((t>>11)&7);
 };
 
 /* end tunes */
@@ -43,7 +43,6 @@ int main(int argc, char** argv){
         exit(1);
     }
 
-    printw("Size of variable t = %d bytes.\n", sizeof(t));
     printw("Press <RET> to advance to next tune, C-c to quit.\n");
     refresh();            /* Print it on to the real screen */
 
@@ -52,9 +51,6 @@ int main(int argc, char** argv){
     unsigned int (**tunes)(unsigned int);
 
     tunes = malloc(N * sizeof(&tune1));
-    printw("size of tune = %d\n", (&tune1));
-    printw("size of tune = %d\n", (&tune2));
-    printw("size of tune = %d\n", (&tune3));
     if (tunes == NULL)
     {
         fprintf(stderr, "omigod, couldn't allocate tunes array!\n");
