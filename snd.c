@@ -124,6 +124,7 @@ int main(int argc, char** argv){
 
     t=0;
     timeout(0);
+
     while ( 1 ) {
 
         ch = getch();
