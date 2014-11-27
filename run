@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+padsp ./snd
+stty sane
